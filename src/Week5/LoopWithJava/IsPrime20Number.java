@@ -11,28 +11,32 @@ public class IsPrime20Number {
         System.out.print("Enter a number you want to check: ");
         number = input.nextInt();
 
-        int N = 2;
+        if (number > 20) {
+            System.out.println("The number cannot greater than 20 !");
+        } else {
+            int N = 2;
 
-        System.out.print("The first integers is: ");
-        while (count < number) {
-            boolean isPrime = true;
-            if (N < 2) {
-                isPrime = false;
-            } else {
-                for (int i = 2; i <= Math.sqrt(N); i++) {
-                    if (N % i == 0) {
-                        isPrime = false;
-                        break;
+            System.out.print("The first integers is: ");
+            while (count < number) {
+                boolean isPrime = true;
+                if (N < 2) {
+                    isPrime = false;
+                } else {
+                    for (int i = 2; i <= Math.sqrt(N); i++) {
+                        if (N % i == 0) {
+                            isPrime = false;
+                            break;
+                        }
                     }
                 }
-            }
 
-            if (isPrime) {
-                System.out.print(N + " ");
-                count++;
-            }
+                if (isPrime) {
+                    System.out.print(N + " ");
+                    count++;
+                }
 
-            N++;
+                N++;
+            }
         }
     }
 }
