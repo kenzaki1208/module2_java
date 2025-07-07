@@ -51,9 +51,9 @@ public class Demo {
                     }
                     System.out.println("UCLN của 2 số là: " + a);
                     break;
-//                case 0:
-//                    System.exit(0);
-//                    break;
+                case 0:
+                    System.out.print("Thoát chương trình !");
+                    break;
             }
         } while (choice != 0);
     }
