@@ -2,7 +2,7 @@ package Week5.ArrayAndFunctionWithJava;
 
 import java.util.Scanner;
 
-public class FindMaxElement {
+public class CountStudentPass {
     public static void main(String[] args) {
         int size;
         int[] array;
@@ -11,33 +11,28 @@ public class FindMaxElement {
         do {
             System.out.print("Enter the size of array: ");
             size = scanner.nextInt();
-            if (size > 20) {
-                System.out.println("The size must be less than 20");
+            if (size > 30) {
+                System.out.println("The size must be less than 30");
             }
-        } while (size > 20);
+        } while (size > 30);
 
         array = new int[size];
         int i = 0;
         while (i < array.length) {
-            System.out.print("Enter element " + (i + 1) + ": ");
+            System.out.print("Enter a mark for student " + (i + 1) + ": ");
             array[i] = scanner.nextInt();
             i++;
         }
 
-        System.out.print("Property list: ");
+        int count = 0;
+        System.out.print("List of mark: ");
         for (int j = 0; j < array.length; j++) {
 //            System.out.print(array[j] + "\t");
             System.out.printf("%-3d", array[j]);
-        }
-
-        int max = array[0];
-        int index = 1;
-        for (int j = 0; j < array.length; j++) {
-            if (array[j] > max) {
-                max = array[j];
-                index = j + 1;
+            if (array[j] >= 5 && array[j] <= 10 ) {
+                count++;
             }
         }
-        System.out.println("\n" + "The largest property value in the list is " + max + ", at position " + index);
+        System.out.println("\nThe number of student passing the exam is: " + count);
     }
 }
