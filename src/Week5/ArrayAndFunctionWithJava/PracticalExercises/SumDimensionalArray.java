@@ -5,12 +5,18 @@ import java.util.Scanner;
 public class SumDimensionalArray {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-//        int[][] array = {
-//                {1, 3, 5, 7, 9},
-//                {2, 4, 6, 8, 10},
-//                {11, 13, 15, 17, 19},
-//                {20, 22, 24, 26, 28}
-//        };
+        int[][] list = {
+                {1, 3, 5, 7, 9},
+                {2, 4, 6, 8, 10},
+                {11, 13, 15, 17, 19},
+                {20, 22, 24, 26, 28}
+        };
+        for (int i = 0; i < list.length; i++) {
+            for (int j = 0; j < list[i].length; j++) {
+                System.out.print(list[i][j] + " ");
+            }
+            System.out.println();
+        }
 
         System.out.print("Enter number of rows: ");
         int rows = input.nextInt();
@@ -23,7 +29,7 @@ public class SumDimensionalArray {
         System.out.println("Enter elements of array: ");
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
-                System.out.print("Element " + (i + 1) + " " + (j + 1) + ": ");
+                System.out.print("Element row " + (i + 1) + " column " + (j + 1) + ": ");
                 array[i][j] = input.nextInt();
             }
         }
