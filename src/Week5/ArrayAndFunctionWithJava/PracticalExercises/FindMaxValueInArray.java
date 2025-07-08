@@ -10,7 +10,9 @@ public class FindMaxValueInArray {
         };
 
         int max = array[0][0];
+        // hàng
         for (int i = 0; i < array.length; i++) {
+            // cột
             for (int j = 0; j < array[i].length; j++) {
                 if (array[i][j] > max) {
                     max = array[i][j];
