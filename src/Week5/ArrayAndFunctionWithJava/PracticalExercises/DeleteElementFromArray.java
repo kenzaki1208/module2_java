@@ -1,6 +1,5 @@
-package Week5.ArrayAndFunctionWithJava;
+package Week5.ArrayAndFunctionWithJava.PracticalExercises;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DeleteElementFromArray {
