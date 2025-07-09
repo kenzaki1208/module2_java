@@ -7,27 +7,40 @@ public class StopWatch {
     private long endTime;
 
     public StopWatch() {
-        startTime = System.currentTimeMillis();
+        this.startTime = System.currentTimeMillis();
+    }
+
+    public StopWatch(long startTime, long endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public void start() {
-        startTime = System.currentTimeMillis();
+        this.startTime = System.currentTimeMillis();
     }
 
     public void stop() {
-        endTime = System.currentTimeMillis();
+        this.endTime = System.currentTimeMillis();
+    }
+
+    public long getElapsedTime() {
+        return this.endTime - this.startTime;
     }
 
     public long getStartTime() {
         return startTime;
     }
 
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
     public long getEndTime() {
         return endTime;
     }
 
-    public long getElapsedTime() {
-        return endTime - startTime;
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -37,6 +50,7 @@ public class StopWatch {
             arr[i] = rand.nextInt(100000);
         }
 
+        System.out.print("Original array: ");
         StopWatch sw = new StopWatch();
         sw.start();
         selectionSort(arr);
@@ -51,9 +65,12 @@ public class StopWatch {
         System.out.println("+ stop(): void");
         System.out.println("+ getStartTime(): long");
         System.out.println("+ getEndTime(): long");
+        System.out.println("+ setStartTime(): long");
+        System.out.println("+ setEndTime(): long");
         System.out.println("+ getElapsedTime(): long");
 
         System.out.println("Thời gian sắp xếp: " + sw.getElapsedTime() + " ms");
+        System.out.print("Sorted array: ");
     }
 
     public static void selectionSort(int[] arr) {
