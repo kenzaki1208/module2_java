@@ -1,8 +1,8 @@
 package Week5.access_modifier_and_static_method_and_static_property;
 
 public class StaticMethod {
-    private int rollno;
-    private String name;
+    private final int rollno;
+    private final String name;
     private static String college = "BBDIT";
 
     StaticMethod(int r, String n) {
