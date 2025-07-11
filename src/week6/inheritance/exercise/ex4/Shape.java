@@ -1,12 +1,11 @@
 package week6.inheritance.exercise.ex4;
 
-public class Shape extends Triangle{
+public class Shape {
     private String color;
 
     public Shape() {}
 
-    public Shape(String color, double side1, double side2, double side3) {
-        super(side1, side2, side3);
+    public Shape(String color) {
         this.color = color;
     }
 
@@ -18,13 +17,18 @@ public class Shape extends Triangle{
         this.color = color;
     }
 
+    public double getArea() {
+        return 0.0;
+    }
+
+    public double getPerimeter() {
+        return 0.0;
+    }
+
     @Override
     public String toString() {
-        return "A shape with color: "
-                + getColor()
-                + " and sides: "
-                + getSide1() + ", "
-                + getSide2() + ", "
-                + getSide3();
+        return "A shape with color: " + getColor()
+                + " and area: " + getArea()
+                + " and perimeter: " + getPerimeter();
     }
 }
