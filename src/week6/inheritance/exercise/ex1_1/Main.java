@@ -1,18 +1,15 @@
-package week6.inheritance.exercise;
-
-import week6.inheritance.exercise.ex1_1.Circle;
-import week6.inheritance.exercise.ex1_1.Cylinder;
+package week6.inheritance.exercise.ex1_1;
 
 public class Main {
     public static void main(String[] args) {
-//        Circle circle1 = new Circle();
-//        System.out.println(circle1);
+        //        Circle circle1 = new Circle();
+        //        System.out.println(circle1);
 
         Circle circle1 = new Circle(2.3, "red");
         System.out.println(circle1);
 
-//        Cylinder cylinder1 = new Cylinder();
-//        System.out.println(cylinder1);
+        //        Cylinder cylinder1 = new Cylinder();
+        //        System.out.println(cylinder1);
 
         Cylinder cylinder = new Cylinder(2.3, 5.8, "orange");
         System.out.println(cylinder);
