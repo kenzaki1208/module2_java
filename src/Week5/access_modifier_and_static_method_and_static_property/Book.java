@@ -7,14 +7,16 @@ public class Book {
     private boolean borrowed;
     private static int totalBooks;
 
-    public Book() {}
-
-    public Book(String title, String author, String isbn) {
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.borrowed = false;
+    public Book() {
+        totalBooks++;
     }
+
+//    public Book(String title, String author, String isbn) {
+//        this.title = title;
+//        this.author = author;
+//        this.isbn = isbn;
+//        this.borrowed = false;
+//    }
 
     public Book(String title, String author, String isbn, boolean borrowed) {
         this.title = title;
