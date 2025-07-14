@@ -1,6 +1,7 @@
 package week7.practice.exp1.main;
 
 import week7.practice.exp1.codegym.Circle;
+import week7.practice.exp1.codegym.Rectangle;
 import week7.practice.exp1.codegym.Shape;
 import week7.practice.exp1.codegym.Square;
 
@@ -9,7 +10,7 @@ public class Main {
         Shape[] shapes = new Shape[3];
         shapes[0] = new Square(5);
         shapes[1] = new Circle(7);
-        shapes[2] = new Square(9);
+        shapes[2] = new Rectangle(7, 9);
 
         for (Shape shape : shapes) {
             System.out.println(shape);
