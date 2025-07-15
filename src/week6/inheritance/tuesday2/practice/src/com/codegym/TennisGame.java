@@ -8,7 +8,9 @@ public class TennisGame {
             score = getScoreDescription(player1Score);
         }
         else {
-            if (player1Score >= 4 || player2Score >= 4) {
+            boolean isPlayer1Leading = player1Score >= 4;
+            boolean isPlayer2Leading = player2Score >= 4;
+            if (isPlayer1Leading || isPlayer2Leading) {
                 score = getMatchScore(player1Score, player2Score);
             }
             else {
