@@ -1,0 +1,168 @@
+---
+
+## 🧩 Tổng quan các file
+
+| Tên file                   | Vai trò                                                                |
+| -------------------------- | ---------------------------------------------------------------------- |
+| `Resizeable.java`          | Interface định nghĩa phương thức `resize(double percent)`              |
+| `ResizeableCircle.java`    | Lớp hình tròn cài đặt interface `Resizeable`                           |
+| `ResizeableRectangle.java` | Lớp hình chữ nhật cài đặt interface `Resizeable`                       |
+| `ResizeableSquare.java`    | Lớp hình vuông kế thừa hình chữ nhật và cũng cài đặt `Resizeable`      |
+| `Main.java`                | File kiểm thử chính, tạo mảng các hình, resize từng hình và in kết quả |
+
+---
+
+## 🔄 Mối liên hệ giữa các file
+
+```
+[Interface Resizeable]
+        ↑
+        |
++-------------------------+
+|                         |
+|                         |
+|    Các lớp hình học     |
+|                         |
+|                         |
++-------------------------+
+   ↑         ↑          ↑
+   |         |          |
+[ResizeableCircle] [ResizeableRectangle]
+                        ↑
+                        |
+              [ResizeableSquare]
+```
+
+---
+
+## 📄 1. `Resizeable.java`
+
+```java
+public interface Resizeable {
+    void resize(double percent);
+}
+```
+
+* Đây là **interface** dùng để đánh dấu rằng một đối tượng có khả năng **thay đổi kích thước**.
+* Bất kỳ lớp nào implements interface này phải định nghĩa lại phương thức `resize(double percent)`.
+
+---
+
+## 📄 2. `ResizeableCircle.java`
+
+```java
+public class ResizeableCircle implements Resizeable {
+    private double radius;
+
+    public ResizeableCircle(double radius) {
+        this.radius = radius;
+    }
+
+    public double getArea() {
+        return Math.PI * radius * radius;
+    }
+
+    public void resize(double percent) {
+        radius += radius * percent / 100;
+    }
+}
+```
+
+* Là lớp đại diện cho hình tròn.
+* Cài đặt `Resizeable`, nên có thể **thay đổi kích thước**.
+* Diện tích = π \* r². Khi gọi `resize(50)`, bán kính tăng 50%.
+
+---
+
+## 📄 3. `ResizeableRectangle.java`
+
+```java
+public class ResizeableRectangle implements Resizeable {
+    private double width;
+    private double height;
+
+    public ResizeableRectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public double getArea() {
+        return width * height;
+    }
+
+    public void resize(double percent) {
+        width += width * percent / 100;
+        height += height * percent / 100;
+    }
+}
+```
+
+* Đại diện cho hình chữ nhật.
+* `resize()` sẽ tăng cả chiều rộng và chiều cao theo phần trăm.
+
+---
+
+## 📄 4. `ResizeableSquare.java`
+
+```java
+public class ResizeableSquare extends ResizeableRectangle {
+    public ResizeableSquare(double side) {
+        super(side, side);
+    }
+
+    public void resize(double percent) {
+        super.resize(percent);
+    }
+}
+```
+
+* Kế thừa từ `ResizeableRectangle` vì hình vuông là trường hợp đặc biệt của hình chữ nhật.
+* Constructor nhận 1 cạnh `side`, truyền vào cả width và height của `ResizeableRectangle`.
+* Override `resize()` để gọi lại hàm resize của lớp cha.
+
+---
+
+## 📄 5. `Main.java`
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Resizeable[] shapes = new Resizeable[3];
+        shapes[0] = new ResizeableCircle(5);
+        shapes[1] = new ResizeableRectangle(4, 6);
+        shapes[2] = new ResizeableSquare(3);
+
+        for (Resizeable shape : shapes) {
+            System.out.println("Before resize: Area = " + getArea(shape));
+            shape.resize(50); // tăng kích thước 50%
+            System.out.println("After resize: Area = " + getArea(shape));
+            System.out.println("-------------------------");
+        }
+    }
+
+    public static double getArea(Resizeable shape) {
+        if (shape instanceof ResizeableCircle) {
+            return ((ResizeableCircle) shape).getArea();
+        } else if (shape instanceof ResizeableRectangle) {
+            return ((ResizeableRectangle) shape).getArea();
+        }
+        return 0;
+    }
+}
+```
+
+* Khởi tạo một mảng gồm 3 hình có thể resize.
+* In diện tích **trước và sau khi thay đổi kích thước**.
+* Dùng `instanceof` để kiểm tra kiểu cụ thể của từng hình để gọi `getArea()`.
+
+---
+
+## 🧠 Tóm tắt hoạt động
+
+1. Interface `Resizeable` định nghĩa chung cho khả năng thay đổi kích thước.
+2. Các lớp hình cụ thể (Circle, Rectangle, Square) cài đặt interface này.
+3. Trong `Main`, bạn có thể làm việc với tất cả hình dưới dạng `Resizeable`.
+4. Dùng `instanceof` để kiểm tra kiểu và tính diện tích chính xác.
+
+---
+
