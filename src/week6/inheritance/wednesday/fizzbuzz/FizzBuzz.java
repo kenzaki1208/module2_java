@@ -9,6 +9,11 @@ public class FizzBuzz {
 
         boolean isFizz = isCheckNumb3 || checkNumb3;
         boolean isBuzz = isCheckNumb5 || checkNumb5;
+
+        return getFizzBuzz(number, isFizz, isBuzz);
+    }
+
+    private static String getFizzBuzz(int number, boolean isFizz, boolean isBuzz) {
         if (isFizz && isBuzz) {
             return "FizzBuzz";
         } else if (isFizz) {
