@@ -38,6 +38,6 @@ public class FizzBuzzTest {
 
     @Test
     public void FizzBuzzTrans() {
-        assertEquals("Hai mươi",FizzBuzz.isFizzBuzz(20));
+        assertEquals("Hai mươi",FizzBuzzTranslate.Translate(2, 0));
     }
 }
