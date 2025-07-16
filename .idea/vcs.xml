@@ -2,6 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/week6/inheritance/tuesday2/exercise/refactor/apj-2023-cylinder" vcs="Git" />
   </component>
 </project>
