@@ -2,6 +2,10 @@ package week6.inheritance.wednesday.triangle;
 
 public class TriangleClassifier {
     public static String classify(int side1, int side2, int side3) {
+        return getTriangle(side1, side2, side3);
+    }
+
+    private static String getTriangle(int side1, int side2, int side3) {
         if (side1 + side2 <= side3 || side1 + side3 <= side2 || side2 + side3 <= side1) {
             return "Không phải là tam giác";
         }
