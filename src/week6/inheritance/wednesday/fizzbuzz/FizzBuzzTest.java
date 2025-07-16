@@ -40,4 +40,9 @@ public class FizzBuzzTest {
     public void FizzBuzzTrans() {
         assertEquals("Hai mươi",FizzBuzzTranslate.Translate(2, 0));
     }
+
+    @Test
+    public void FizzBuzzTrans1() {
+        assertEquals("Hai mươi Sáu",FizzBuzzTranslate.Translate(2, 6));
+    }
 }
