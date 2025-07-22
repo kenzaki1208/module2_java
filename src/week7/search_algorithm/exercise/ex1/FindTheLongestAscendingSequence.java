@@ -9,21 +9,23 @@ public class FindTheLongestAscendingSequence {
         String input = scanner.nextLine();
 
         String longest = "";
-        String current = "";
+        StringBuilder current = new StringBuilder();
 
         for (int i = 0; i < input.length(); i++) {
-            if (current.length() == 0 || input.charAt(i) > current.charAt(current.length() - 1)) {
-                current += input.charAt(i);
+            char c = input.charAt(i);
+            if (current.length() == 0 || c > current.charAt(current.length() - 1)) {
+                current.append(c);
             } else {
                 if (current.length() > longest.length()) {
-                    longest = current;
+                    longest = current.toString();
                 }
-                current = "" + input.charAt(i);
+                current.setLength(0);
+                current.append(c);
             }
         }
 
         if (current.length() > longest.length()) {
-            longest = current;
+            longest = current.toString();
         }
 
         System.out.println("The longest ascending sequence is " + longest);
