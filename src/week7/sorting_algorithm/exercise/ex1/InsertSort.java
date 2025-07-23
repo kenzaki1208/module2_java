@@ -1,8 +1,8 @@
 package week7.sorting_algorithm.exercise.ex1;
 
-public class SelectionSort {
+public class InsertSort {
 
-    public static void selectionSort(int[] list) {
+    public static void insertSort(int[] list) {
         for (int i = 1; i < list.length; i++) {
             int currentElement = list[i];
             int k;
