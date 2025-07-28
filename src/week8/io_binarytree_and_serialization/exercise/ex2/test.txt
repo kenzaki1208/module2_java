@@ -1,0 +1,3 @@
+Hệ nhị phân (hay còn gọi là hệ đếm cơ số 2) là một hệ thống số sử dụng hai ký tự, 0 và 1,
+để biểu diễn mọi giá trị. Nó là nền tảng của hoạt động máy tính và các thiết bị kỹ thuật số,
+vì các thiết bị này thường hoạt động dựa trên hai trạng thái: có điện (1) hoặc không có điện (0).
