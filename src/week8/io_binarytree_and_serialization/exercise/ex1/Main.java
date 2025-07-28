@@ -15,6 +15,7 @@ public class Main {
             System.out.println("4. Update product");
             System.out.println("5. Search product");
             System.out.println("0. Exit");
+            System.out.print("Enter your choice: ");
             choice = input.nextInt();
             input.nextLine();
 
