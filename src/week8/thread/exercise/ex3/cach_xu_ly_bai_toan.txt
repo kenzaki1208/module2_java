@@ -1,0 +1,182 @@
+---
+
+# 🎯 Phân tích & Giải quyết Bài Toán Tạo Thread
+
+## Bước 1: Đọc và hiểu yêu cầu đề bài
+
+Đề yêu cầu:
+
+* **Mục tiêu**: Luyện tập tạo thread trong Java.
+* **Yêu cầu chi tiết**:
+
+  1. Tạo **2 class triển khai `Runnable`**:
+
+     * `LazyPrimeFactorization` (thuật toán kiểm tra số nguyên tố chưa tối ưu).
+     * `OptimizedPrimeFactorization` (thuật toán kiểm tra số nguyên tố tối ưu hơn).
+  2. Cả 2 runnable khi `start()` đều **tìm số nguyên tố và in kết quả**.
+  3. **Chạy đồng thời cả 2 runnable** để so sánh hiệu quả.
+
+👉 Như vậy bài này kiểm tra **kiến thức Thread** và **tư duy tối ưu thuật toán**.
+
+---
+
+## Bước 2: Xác định bài toán con
+
+Tách đề bài thành các phần nhỏ dễ làm hơn:
+
+1. **Phần Thread**
+
+   * Cần biết `Runnable` là gì.
+   * Biết cách tạo `Thread` từ `Runnable`.
+   * Biết cách `start()` để chạy song song.
+
+2. **Phần tìm số nguyên tố**
+
+   * Lazy: duyệt từ 2 đến n - 1 → nếu chia hết thì không phải số nguyên tố.
+   * Optimized: chỉ cần duyệt đến √n.
+   * Viết một hàm `isPrime(int n)` cho mỗi class.
+
+3. **Phần main()**
+
+   * Tạo đối tượng từ 2 runnable.
+   * Gói vào 2 thread.
+   * Start cả 2 để chúng chạy song song.
+
+---
+
+## Bước 3: Lập kế hoạch triển khai (pseudo-code)
+
+Trước khi code, mình viết ra kế hoạch dạng “ngôn ngữ thường”:
+
+```
+Class LazyPrimeFactorization implements Runnable:
+    Trong run():
+        duyệt các số từ 2 -> N
+        nếu là số nguyên tố (dùng thuật toán đơn giản):
+            in ra
+
+Class OptimizedPrimeFactorization implements Runnable:
+    Trong run():
+        duyệt các số từ 2 -> N
+        nếu là số nguyên tố (dùng thuật toán tối ưu):
+            in ra
+
+Main:
+    Tạo đối tượng lazy
+    Tạo đối tượng optimized
+    Tạo Thread t1 với lazy
+    Tạo Thread t2 với optimized
+    Start cả t1 và t2
+```
+
+---
+
+## Bước 4: Viết code chi tiết
+
+Mình code từng class nhỏ rồi ráp lại.
+
+### LazyPrimeFactorization.java
+
+```java
+public class LazyPrimeFactorization implements Runnable {
+    @Override
+    public void run() {
+        int number = 2;
+        while (number <= 50) { // Giới hạn để dễ xem kết quả
+            if (isPrime(number)) {
+                System.out.println("Lazy found prime: " + number);
+            }
+            number++;
+        }
+    }
+
+    private boolean isPrime(int n) {
+        if (n < 2) return false;
+        for (int i = 2; i < n; i++) {  // Thuật toán đơn giản
+            if (n % i == 0) return false;
+        }
+        return true;
+    }
+}
+```
+
+### OptimizedPrimeFactorization.java
+
+```java
+public class OptimizedPrimeFactorization implements Runnable {
+    @Override
+    public void run() {
+        int number = 2;
+        while (number <= 50) {
+            if (isPrime(number)) {
+                System.out.println("Optimized found prime: " + number);
+            }
+            number++;
+        }
+    }
+
+    private boolean isPrime(int n) {
+        if (n < 2) return false;
+        for (int i = 2; i <= Math.sqrt(n); i++) { // tối ưu bằng căn bậc hai
+            if (n % i == 0) return false;
+        }
+        return true;
+    }
+}
+```
+
+### Main.java
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Runnable lazy = new LazyPrimeFactorization();
+        Runnable optimized = new OptimizedPrimeFactorization();
+
+        Thread t1 = new Thread(lazy);
+        Thread t2 = new Thread(optimized);
+
+        t1.start();
+        t2.start();
+    }
+}
+```
+
+---
+
+## Bước 5: Tư duy xử lý logic khi chạy
+
+1. Khi `main` chạy:
+
+   * Tạo ra `t1` và `t2`.
+2. Khi gọi `t1.start()` → Java tạo **một luồng riêng biệt** chạy `lazy.run()`.
+3. Khi gọi `t2.start()` → Java tạo **một luồng riêng biệt** chạy `optimized.run()`.
+4. Hai luồng chạy **song song** (thực tế là xen kẽ do CPU chia sẻ thời gian).
+5. Vì thuật toán của `optimized` hiệu quả hơn nên khi tăng giới hạn lớn (ví dụ 100000), ta sẽ thấy nó nhanh hơn hẳn so với `lazy`.
+
+---
+
+## Bước 6: Mở rộng (để luyện thêm)
+
+* Thêm **đo thời gian chạy** để so sánh:
+
+```java
+long start = System.currentTimeMillis();
+// code tìm prime
+long end = System.currentTimeMillis();
+System.out.println("Time: " + (end - start) + " ms");
+```
+
+* Thêm **synchronization** nếu muốn quản lý việc in ra không bị xen kẽ.
+* Thay vì in ra, có thể lưu số nguyên tố vào một list và so sánh kết quả.
+
+---
+
+📌 **Tóm gọn cách tư duy**:
+
+* Đọc đề → chia nhỏ vấn đề → xác định phần Thread + phần thuật toán.
+* Lập kế hoạch (pseudo-code) → viết từng class Runnable.
+* Viết main để tạo Thread.
+* Chạy thử với input nhỏ → sau đó mở rộng.
+
+---
