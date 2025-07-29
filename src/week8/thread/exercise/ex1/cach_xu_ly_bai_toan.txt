@@ -1,0 +1,143 @@
+---
+
+## 🎯 Bước 0: Hiểu yêu cầu bài toán
+
+Đề bài có 4 ý chính:
+
+1. Tạo **một lớp NumberGenerator** triển khai `Runnable` để in ra 10 số tự nhiên đầu tiên.
+
+   * Mỗi số cách nhau 500ms.
+   * In thêm hashCode để phân biệt object.
+
+2. Tạo **2 Thread** sử dụng 2 object `NumberGenerator`.
+
+3. Gọi `start()` cho cả 2 Thread để chúng chạy song song.
+
+4. Thay đổi **priority** của 2 Thread rồi chạy lại để xem khác biệt.
+
+👉 Nghĩa là: bài này muốn bạn hiểu **Thread chạy song song** và thấy sự khác biệt khi thay đổi độ ưu tiên.
+
+---
+
+## 🧱 Bước 1: Tư duy về Thread và Runnable
+
+Trong Java, muốn chạy nhiều luồng cùng lúc có 2 cách:
+
+* **Cách 1**: Kế thừa `Thread` rồi override `run()`.
+* **Cách 2**: Triển khai interface `Runnable`, sau đó truyền object Runnable vào `new Thread(runnable)`.
+
+Ở đây đề yêu cầu dùng `Runnable` → ta chọn **Cách 2**.
+
+**Tư duy**:
+
+* `Runnable` giống như một **bản thiết kế công việc** (cái cần làm).
+* `Thread` là **người công nhân** chạy công việc đó.
+* Ta viết công việc trong `run()`.
+* Dùng `Thread thread = new Thread(runnable)` để giao việc cho công nhân.
+* Cuối cùng gọi `thread.start()` để bắt đầu.
+
+---
+
+## 🧱 Bước 2: Viết lớp NumberGenerator
+
+Ta cần in 10 số, mỗi lần cách 500ms. Vậy:
+
+* Dùng vòng `for (int i = 1; i <= 10; i++)` để lặp.
+* In ra số, kèm hashCode để phân biệt object.
+* Gọi `Thread.sleep(500)` để chờ nửa giây.
+* Bọc sleep trong `try/catch` vì nó có thể ném ra InterruptedException.
+
+👉 Mã:
+
+```java
+public class NumberGenerator implements Runnable {
+    @Override
+    public void run() {
+        for (int i = 1; i <= 10; i++) {
+            System.out.println("Thread: " + Thread.currentThread().getName() +
+                               " - Number: " + i +
+                               " - HashCode: " + this.hashCode());
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+---
+
+## 🧱 Bước 3: Tạo và chạy 2 Thread
+
+* Tạo 2 object `NumberGenerator` (generator1, generator2).
+* Tạo 2 Thread, mỗi cái nhận 1 generator.
+* Đặt tên cho dễ phân biệt.
+* Gọi `start()` để chúng chạy song song.
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        NumberGenerator generator1 = new NumberGenerator();
+        NumberGenerator generator2 = new NumberGenerator();
+
+        Thread thread1 = new Thread(generator1, "Thread-1");
+        Thread thread2 = new Thread(generator2, "Thread-2");
+
+        thread1.setPriority(Thread.MIN_PRIORITY); // Ưu tiên thấp
+        thread2.setPriority(Thread.MAX_PRIORITY); // Ưu tiên cao
+
+        thread1.start();
+        thread2.start();
+    }
+}
+```
+
+---
+
+## 🧱 Bước 4: Quan sát kết quả
+
+* Khi chạy, bạn sẽ thấy 2 luồng in số xen kẽ nhau.
+* Kết quả **không cố định**, vì CPU chia thời gian cho 2 Thread.
+* Với priority khác nhau:
+
+  * Thread có `MAX_PRIORITY` có thể in nhiều hơn, nhưng **không đảm bảo tuyệt đối** (Java không bắt buộc tuân thủ 100%).
+
+---
+
+## 🧠 Cách tư duy xử lý dạng bài này
+
+1. **Đọc đề → Xác định đối tượng chính**
+
+   * Ở đây: cần một lớp NumberGenerator chạy song song.
+
+2. **Xác định luồng công việc**
+
+   * run(): in 10 số, mỗi lần dừng 500ms.
+
+3. **Xác định cơ chế thực thi**
+
+   * Sử dụng Runnable + Thread để tạo và chạy song song.
+
+4. **Xem yêu cầu bổ sung**
+
+   * In hashCode để phân biệt.
+   * Thay đổi priority.
+
+5. **Viết code từ trong ra ngoài**
+
+   * Viết class NumberGenerator trước.
+   * Viết class Main để gọi Thread sau.
+
+---
+
+## 📌 Kết luận
+
+* `Runnable` chỉ chứa **công việc**.
+* `Thread` là **người chạy công việc đó**.
+* `start()` → chạy luồng song song.
+* `priority` ảnh hưởng đến mức độ ưu tiên, nhưng không tuyệt đối.
+* `sleep(ms)` → tạm dừng luồng, giúp dễ quan sát.
+
+---

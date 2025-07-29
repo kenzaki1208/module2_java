@@ -1,0 +1,186 @@
+---
+
+# 🧩 Phân tích đề bài
+
+Đề yêu cầu:
+
+* Có 2 luồng (thread):
+
+  * OddThread: in các số lẻ từ 1 → 10, nghỉ 10ms sau mỗi số.
+  * EvenThread: in các số chẵn từ 1 → 10, nghỉ 15ms sau mỗi số.
+* Trong `main`, tạo 2 thread này và cho chạy.
+* Mở rộng: dùng `join()` để bắt buộc OddThread chạy xong trước rồi mới chạy EvenThread.
+
+👉 Vậy ta cần:
+
+1. Biết cách **tạo Thread bằng cách kế thừa lớp Thread**.
+2. Biết cách **override phương thức run()** để định nghĩa công việc.
+3. Biết cách **start() Thread** để nó chạy.
+4. Biết cách **join()** để đồng bộ luồng (chạy tuần tự).
+
+---
+
+# 🧱 Bước 1: Chọn hướng giải pháp
+
+Đề nói rõ "kế thừa từ Thread" → mình chọn kế thừa `Thread` thay vì dùng `Runnable`.
+
+👉 Tư duy:
+
+* Mỗi Thread = một công việc cần làm.
+* Mình sẽ viết 2 class: `OddThread` và `EvenThread`.
+* Trong mỗi class, định nghĩa công việc trong `run()`.
+
+---
+
+# 🧱 Bước 2: Viết OddThread
+
+Công việc: in ra số lẻ 1–10, mỗi số cách nhau 10ms.
+
+👉 Tư duy:
+
+* Dùng vòng `for` từ 1 → 10.
+* Dùng `if (i % 2 != 0)` để lọc số lẻ.
+* In ra màn hình.
+* Sau mỗi lần in, gọi `Thread.sleep(10)` để tạm dừng 10ms.
+* Vì `sleep` có thể gây lỗi nên cần `try...catch`.
+
+👉 Code:
+
+```java
+public class OddThread extends Thread {
+    @Override
+    public void run() {
+        for (int i = 1; i <= 10; i++) {
+            if (i % 2 != 0) { // chỉ in số lẻ
+                System.out.println("OddThread: " + i);
+                try {
+                    Thread.sleep(10); // nghỉ 10ms
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+```
+
+---
+
+# 🧱 Bước 3: Viết EvenThread
+
+Tương tự OddThread, nhưng lọc số chẵn và nghỉ 15ms.
+
+👉 Tư duy:
+
+* Vòng for 1 → 10.
+* Điều kiện `if (i % 2 == 0)`.
+* Dùng `Thread.sleep(15)`.
+
+👉 Code:
+
+```java
+public class EvenThread extends Thread {
+    @Override
+    public void run() {
+        for (int i = 1; i <= 10; i++) {
+            if (i % 2 == 0) { // chỉ in số chẵn
+                System.out.println("EvenThread: " + i);
+                try {
+                    Thread.sleep(15); // nghỉ 15ms
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+```
+
+---
+
+# 🧱 Bước 4: Viết lớp TestThread
+
+Mục tiêu: tạo 2 đối tượng Thread, gọi `start()` để chạy song song.
+
+👉 Tư duy:
+
+* Tạo object `oddThread` và `evenThread`.
+* Gọi `start()` để chạy **song song** (chứ không phải `run()`).
+* Kết quả: số lẻ và số chẵn sẽ xen kẽ nhau, nhưng thứ tự không cố định (do CPU chia thời gian cho 2 thread).
+
+👉 Code:
+
+```java
+public class TestThread {
+    public static void main(String[] args) {
+        OddThread oddThread = new OddThread();
+        EvenThread evenThread = new EvenThread();
+
+        oddThread.start(); // chạy song song
+        evenThread.start();
+    }
+}
+```
+
+---
+
+# 🧱 Bước 5 (Mở rộng): Dùng join()
+
+Muốn đảm bảo in hết số lẻ trước → dùng `join()`.
+
+👉 Tư duy:
+
+* `oddThread.start()` → bắt đầu chạy OddThread.
+* `oddThread.join()` → bắt main thread **chờ** OddThread chạy xong.
+* Sau đó mới `evenThread.start()`.
+* Kết quả: in toàn bộ số lẻ, rồi đến toàn bộ số chẵn.
+
+👉 Code:
+
+```java
+public class TestThread {
+    public static void main(String[] args) {
+        OddThread oddThread = new OddThread();
+        EvenThread evenThread = new EvenThread();
+
+        oddThread.start();
+        try {
+            oddThread.join(); // chờ oddThread kết thúc
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        evenThread.start();
+    }
+}
+```
+
+---
+
+# 🧠 Tổng hợp tư duy logic
+
+1. **Đọc yêu cầu đề** → xác định cần 2 Thread riêng biệt.
+2. **Chọn cách triển khai Thread** → kế thừa `Thread` (đúng theo yêu cầu).
+3. **Xác định công việc mỗi Thread**:
+
+   * OddThread: lọc số lẻ + sleep(10).
+   * EvenThread: lọc số chẵn + sleep(15).
+4. **Viết phương thức run()** → định nghĩa công việc.
+5. **Trong main**:
+
+   * Tạo object 2 Thread.
+   * Gọi `start()` → chạy song song.
+6. **Mở rộng join()**:
+
+   * Dùng join để **đồng bộ** thứ tự thực thi giữa các Thread.
+
+---
+
+📌 Kết luận:
+
+* Thread giúp ta chạy **nhiều công việc song song**.
+* `start()` tạo ra luồng mới, `run()` chỉ là nội dung của luồng.
+* `sleep()` tạm dừng Thread hiện tại.
+* `join()` làm Thread hiện tại **đợi** Thread kia kết thúc rồi mới tiếp tục.
+
+---
