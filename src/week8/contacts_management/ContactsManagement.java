@@ -52,7 +52,7 @@ public class ContactsManagement {
         }
     }
 
-    public boolean deleteById (String phoneNumber) {
+    public boolean deleteByPhone (String phoneNumber) {
         Scanner scanner = new Scanner(System.in);
         Iterator<Contacts> iterator = contactsList.iterator();
         while (iterator.hasNext()) {

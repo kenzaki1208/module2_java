@@ -1,5 +1,6 @@
 package week8.contacts_management;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -59,11 +60,11 @@ public class Main {
                     }
                     break;
                 case 4:
-                    System.out.println("Enter contact id to delete: ");
-                    int deleteId = scanner.nextInt();
+                    System.out.println("Enter contact phone number to delete: ");
+                    String deletePhoneNumber = scanner.nextLine();
                     scanner.nextLine();
 
-                    if (manager.deleteById(deleteId)) {
+                    if (manager.deleteByPhone(deletePhoneNumber)) {
                         System.out.println("Contact deleted successfully !");
                     } else {
                         System.out.println("Contact not found !");
@@ -72,8 +73,16 @@ public class Main {
                 case 5:
                     System.out.println("Enter contact name to search: ");
                     String searchName = scanner.nextLine();
-                    Contacts foundContact = manager.searchByName(searchName);
-                    System.out.println(foundContact != null ? foundContact : "Contact not found !");
+                    List<Contacts> foundContacts = manager.searchByName(searchName);
+
+                    if (!foundContacts.isEmpty()) {
+                        System.out.println("Search results:");
+                        for (Contacts c : foundContacts) {
+                            System.out.println(c);
+                        }
+                    } else {
+                        System.out.println("Contact not found !");
+                    }
                     break;
                 case 0:
                     System.out.println("Exiting !");
