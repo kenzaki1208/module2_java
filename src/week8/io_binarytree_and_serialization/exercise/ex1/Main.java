@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         ProductManager manager = new ProductManager();
-        int choice = 0;
+        int choice;
         do {
             System.out.println("Product Management:");
             System.out.println("1. Add product");
