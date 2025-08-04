@@ -1,0 +1,173 @@
+I. Mẫu thiết kế Proxy
+1. Định nghĩa
+
+* Đưa ra một đại diện, thay thế cho một đối tượng để kiếm soát quyền truy cập vào nó.
+* Sử dụng mức độ gián tiếp để kiểm soát, phân tán hoặc truy cập tốt hơn.
+* Thêm một wrapper (gói gọn các chi tiết xử lý) và delegation (cung cấp hàm để gọi đến các xử lý đó) để bảo mật các thành phần thực sự khỏi sự phức tạp
+
+2. Vấn đề
+
+* Bạn cần phải hỗ trợ việc thiếu tài nguyên các object, bạn không muốn phải khởi tạọ các object cho đến khi chúng thực sự được yêu cầu từ phía client.
+
+3. Thảo luận
+
+* Thiết kế một đại diện, hoặc ủy quyền đối tượng đó: khởi tạo đối tượng thực sự cần ở lần đầu tiên client yêu cầu, ghi nhớ nhận dạng của đối tượng đấy, và chuyển tiếp yêu cầu khởi tạo đến đối tượng thực sự này. Sau đó, tát cả các yêu cầu tiếp theo chỉ đơn giản là chuyển tiếp trục tiếp đến đối tượng đã được đóng gói
+
+* Proxy Pattern được áp dụng ở 4 trường hợp phổ biến sau:
+   a. Một proxy ảo được thay thế cho các đối tượng không dễ để tạo ra. Đối tượng thực sự chỉ được tạo khi client lần đầu yêu cầu/ truy cập đối tượng.
+
+   b. Một proxy từ xa cung cấp đại diện local cho một đối tượng ở trong một không gian địa chỉ khác nhau. Đây là những gì mà mã “stub” trong RPC và CORBA đưa ra.
+
+   c. Một proxy bảo vệ kiểm soát truy cập tới một đối tượng nhạy cảm chính. Đối tượng được đại diện kiểm tra người gọi có được quyền truy cập được yêu cầu trước khi chuyển tiếp yêu cầu.
+
+   d. Một proxy khôn ngoan can thiệp các hành động được thêm vào khi một đối tượng được phép truy cập. Điển hình như:
+   - Đếm số tham chiếu tới đối tượng thực vì vậy nó có thể giải phóng tự động khi không có nhiều tham chiếu (aka smart pointer).
+   - Nạp một đối tượng liên tục vào bộ nhớ khi nó được tham chiếu lần đầu tiên
+   - Kiểm tra xem đối tượng thực có bị khóa trước khi nó được truy cập để đảm bảo không có bất kỳ đối tượng nào có thể thay đổi nó.
+
+4. Cấu trúc
+
+* Bằng cách định nghĩa một giao diện Subject, đối tượng Proxy đứng ở vị trí của RealSubject là minh bạch tới client.
+
+5. Ví dụ
+
+* Đưa ra một đại diện, thay thế cho một đối tượng để kiếm soát quyền truy cập tới một đối tượng. Séc hoặc tờ phiếu ngân hàng là một proxy cho các khoản tiền trong tài khoản. Séc có thể được sử dụng để thay thế cho tiền để mua hàng và cuối cùng kiểm soát việc truy cập vào tiền mặt trong tài khoản của người dùng.
+
+6. Kiểm tra
+   Xác định thế mạnh hoặc các khía cạnh được thực hiện một cách tốt nhất dưới dạng wrapper hay surrogate (đại diện)
+
+   a. Định nghĩa một giao diện sẽ làm cho proxy và thành phần ban đầu có thể hoán đổi cho nhau.
+
+   b. Xem xét xác định một Factory có thể được đóng gói các giải pháp cho dù proxy hoặc các đối tượng gốc thực sự là kỳ vọng.
+
+   c. Lớp wrapper giữ con trỏ tới lớp thật và thực hiện giao diện
+
+   d. Con trỏ có thể được khởi tạo ở hàm tạo hoặc khi sử dụng lần đầu tiên
+
+   e. Mỗi phương thức wrapper đóng góp thế mạnh, và ủy quyền tới các đối tượng wrappee
+
+7.Kinh nghiệm thực tiễn
+
+* Adapter cung cấp một giao diện khác cho subject của nó. Proxy cung cấp cùng giao diện đó. Decorator cung cấp một giao diện nâng cao hơn
+
+* Decorator và Proxy có các mục đích khác nhau nhưng có cùng cấu trúc tương tự nhau. Chúng mô tả làm thế nào để đưa ra mức độ gián tiếp cho một đối tượng khác, và thực thi nắm giữ một tham chiếu đến đối tượng mà chúng chuyển tiếp yêu cầu.
+
+II. Mẫu thiết kế Facade
+1. Mục đích
+* Cung cấp một giao diện nhất quán cho tập hợp các giao diện trong một subsystem. Facade Pattern định nghĩa một giao diện ở một cấp độ cao hơn để giúp cho người dùng có thể dễ dàng sử dụng subsystem này vì chỉ cần giao tiếp với một giao diện chung duy nhất.
+
+* Bao bọc một subsystem phức tạp với một giao diện đơn giản.
+
+2. Vấn đề
+* Một phân đoạn của client community cần một giao diện đơn giản cho toàn thể các chức năng của một subsystem phức tạp.
+
+3. Thảo luận
+* Facade che đi sự phức tạp của các thành phần subsystem (phụ) đối với client. Khắc phục cấu trúc khớp nối lỏng lẻo giữa các subsystem với nhau và giữa các subsystem với client. Mặt khác, nếu Facade chỉ là điểm truy cập duy nhất cho subsystem nó sẽ giới hạn tính năng và tính linh hoạt mà “những người sử dụng thành thạo” có thể cần. Đối tượng Facade nên điều phối hoặc hỗ trợ đơn giản. Nó không nên trở thành một nhà tiên tri biết tất cả mọi thứ hay một đối tương “thần thánh” nào đó.
+
+4. Cấu trúc
+* Facade sẽ lấy một "thứ khó hiểu bí ẩn được phủ trong sự thần bí" và chen vào một lớp phủ để có thể thuần hóa sự vô định hình và tính khó hiểu của đống phần mềm hỗn độn đó.
+* SubsystemOne và SubsystemThree không tương tác trực tiếp với các thành phận nội tại của SubsystemTwo thay vào đó chúng sử dụng SussystemTwoWrapper “facade”(ví dụ: Trừu tượng ở cấp độ cao”)
+
+5. Ví dụ
+* Facade định nghĩa một giao diện thống nhất, cấp cao hơn cho một subsystem làm cho nó sử dụng dễ dàng hơn. Người mua gặp Facade khi đặt hàng từ một cửa hàng. Người mua gọi vào một số và nói chuyện với đại diện dịch vụ khách hàng. Bộ phận đại diện dịch vụ khách hàng đóng vai trò như Facade, cung cấp giao diện cho bộ phận hoàn thành đơn đặt hàng, bộ phận thanh toán và bộ phận vận chuyển.
+
+6. Danh sách kiểm tra
+* Nhận diện một giao diện đơn giản, thống nhất cho cho subsystem hoặc component.
+
+* Thiết kế class“bọc ngoài” đóng gói subsystem.
+
+* Facade(hay còn gọi là wrapper) nắm bắt sự phức tạp và cộng tác của các component và phân công xử lý cho các method thích hợp.
+
+* Client sử dụng (Chỉ giao tiếp) với Facade.
+
+* Cân nhắc việc thêm hay không thêm Facade khi muốn tạo dữ liệu.
+
+7. Quy tắc chung
+* Facade định nghĩa một interface mới, trong khi Adapter sử dụng interface cũ. Hãy nhớ rằng Adapter làm cho hai interface hiện tại có thể làm việc cùng nhau trái ngược với việc tạo một interface hoàn toàn mới.
+
+* Trong khi Flyweight cho thấy làm thế nào để làm việc trên nhiều đối tượng thì Facade cho thấy làm thế nào để một đối tượng đại diện cho toàn bộ subsystem.
+
+* Mediator tương tự như Facade trong đó nó trừu tượng hóa chức năng của các lớp hiện tại. Mediator trừu tượng hóa/tập trung tùy ý sự giao tiếp giữa các đối tượng tương đồng.Nó thường “adds value” và nó được biết/tham chiếu bởi các đối tượng tương đồng. Ngược lại, Facade định nghĩa một giao diện đơn giản, nó không thêm mới chức năng. và nó cũng không được biết đến bởi các lớp subsystem.
+
+* Abstract Factory có thể được sử dụng như một thay thế cho Facade cho việc ẩn các lớp nền tảng được chỉ định.
+
+* Đối tượng Facade thường là Singletons vì chỉ có một đối tượng Facade là cần thiết.
+
+* Adapter và Facade cả hai đều là bọc ngoài(wrappers) nhưng chúng là các loại wrapper khác nhau. Mục đích của Facade là tạo ra một interface đơn giản còn mục đích của Adapter là thiết kế trên interface hiện có. Trong khi Facade thường kết hợp nhiều đối tượng thì Adapter chỉ kết hợp một đối tượng duy nhất; Facade có thể front-end một đối tượng phức tạp đơn lẻ và Adapter có thể gói một vài đối tượng kế thừa.
+
+* Câu hỏi: Sự khác nhau giữa Adapter pattern và Facade pattern là Adapter bao bọc một lớp còn Facade có thể đại diện cho nhiều lớp đúng hay không?
+
+* Trả lời: Không! Hãy nhớ rằng, Adapter pattern thay đổi giao diện của một hoặc nhiều lớp thành một giao diện mà client mong muốn. Trong khi các ví dụ trong sách phổ biến chỉ ra rằng adapter adapting cho một lớp, bạn cần phải adapt nhiều lớp để cung cấp giao diện cho một client đã được xây dựng. Tương tự như vậy, Facade cung cấp một giao diện đơn giản cho một lớp duy nhất với 1 giao diện phức tạp. Sự khác nhau giữa 2 loại trên không phải là về số lượng các lớp chúng “wrap” mà là về mục đích của chúng.
+
+8. Ví dụ về làm thế nào để thực thi một mẫu thiết kế Facade trong Java
+* Mẫu thiết kế Facade
+
+    a. Xác định một interface mong muốn cho tập hợp subsystems
+
+    b. Thiết kế “wrapper” class có thể đóng gói sử dụng của các subsystems
+
+    c. Client sử dụng(kết hợp với) Facade
+
+    d. Facade/wrapper “ánh xa” vào các API của các subsystems
+
+    e. Nguồn: https://sourcemaking.com/design_patterns/facade
+
+III. Mẫu thiết kế Adapter
+1. Mục đích
+
+* Chuyển đổi giao diện của một hay nhiều lớp có sẵn thành một giao diện khác mà client mong muốn.  Adapter cho phép các lớp có các giao diện khác nhau có thể dể dàng giao tiếp tốt với nhau thông qua giao diện chuyển tiếp trung gian mà không cần thay đổi code của lớp có sẵn cũng như lớp đang viết.
+
+* Cung cấp một giao diện “bọc ngoài” tương thích cho một hệ thống có sẵn
+
+* Đối ứng phù hợp với các component cũ cho hệ thống mới
+
+2. Vấn đề
+
+* Một component “có sẵn” với các tính năng đầy đủ có sẵn mà bạn muốn sử dụng lại, nhưng theo quan điểm mới nó lại không phù hợp với triết lý và kiến trúc của hệ thống đang được phát triển.
+
+3. Thảo luận
+
+* Vấn đề sử dụng lại luôn khó khăn và mất nhiều công sức. Lý do ở đây là sự rắc rối khi thiết kế một cái gì đó mới trong khi hoàn toàn có thể sử dụng lại cái cũ. Luôn luôn có một thứ gì đó không toàn đúng giữa cũ và mới. Nó có thể là kích thước vật lý hoặc sai lệch, có thể là thời gian hoặc sự đồng bộ hóa. Cũng có thể là giả định không may hoặc tiêu chuẩn cạnh tranh. Nó giống như vấn đề lắp một cái phích cắm ba chấu loại mới vào ổ cắm tường 2 chấu cũ, do đó một số công cụ chuyển đổi hoặc trung gian là cần thiết.
+
+* Adapter là việc tạo ra sự chuyển đổi trừu tượng trung gian, hoặc biểu đồ, hoặc đưa componennt cũ vào hệ thống mới. Client gọi phương thức của đối tượng Adapter, Adapter chuyển hướng lời gọi tới các hệ thống cũ. Chiến lược này có thể thực thi thông qua cơ chế kế thừa (inheritance) hoặc kết tập (aggregation).
+
+* Adapter hoạt động giống như một bộ bao gói (wrapper) hoặc bộ điều chỉnh (modifier) của lớp hiện tại. Nó cung cấp một cái nhìn khác về dịch vụ đó.
+
+4. Cấu trúc
+
+* Bên dưới, Thành phần LegacyRectangle với phương thức display() có các tham số đầu vào "x, y, w, h". Nhưng Client muốn truyền vào "x1, y1, x2,  y2". Sự khác biệt này có thể được dàn xếp bằng cách tạo một đối tượng bổ sung-ví dụ: Đối tượng Adapter.
+* Adapter cũng có thể được coi là một "wrapper".
+
+5. Ví dụ
+
+* Adapter pattern cho phép các lớp không tương thích làm việc cùng nhau bằng cách chuyển đổi giao diện của một lớp thành một giao diện mà các client mong đợi. Cái cờ lê là một ví dụ về Adapter. Ví dụ cần siết một con ốc, với điều kiện kích thước là như nhau. Kích thước chuẩn của Hoa Kỳ là 1/2 "và 1/4". Rõ ràng, một con ốc cỡ 1/2 "sẽ không khớp với lỗ siết của cờ lê là 1/4" trừ khi sử dụng bộ chuyển đổi. Bộ chuyển đổi từ 1/2 "đến 1/4" có một đầu nối 1/2 "để lắp vào con ốc 1/2" và một đầu nối 1/4 "để khớp với lỗ siết của cờ lê 1/4".
+
+6. Danh sách kiểm tra
+
+* Nhận diện người dùng: Các thành phần muốn làm cho phù hợp(ví dụ: client), và các thành phần cần chuyển đổi.
+
+* Xác định giao diện mà client yêu cầu.
+
+* Thiết kế class “wrapper” có thể đối ứng phù hợp adaptee cho client.
+
+* Class adapter/wrapper “có một” thể hiện của lớp adaptee.
+
+* Class adapter/wrapper “ánh xạ” giao diện client đến giao diện adaptee.
+
+* Client sử dụng(được kết hợp với) giao diện mới.
+
+7. Qui tắc ngón tay cái:
+
+a. Adapter làm cho mọi thứ hoạt động sau khi chúng được thiết kế; Làm cầu nối.
+
+b. Bridge có cấu trúc tương tự, nhưng mục tiêu khác (tách một giao diện khỏi phần cài đặt). Adapter được trang bị để làm cho các lớp không liên quan làm việc cùng nhau.
+
+c. Adapter cung cấp giao diện khác nhau cho đối ứng của nó. Proxy Định nghĩa một giao diện đại diện cho các đối tượng khác mà không làm thay đổi giao diện của các đối tượng được đại diện, điều này thực hiện được nhờ các Adapter., một Adapter sẽ phối hợp hai đối tượng khác nhau. Decorator giao diện nâng cao.
+
+d. Adapter có nghĩa là thay đổi giao diện của một đối tượng hiện có. Decorator bổ sung thêm chức năng nhưng không làm thay đổi giao diện, trong mẫu thiết kế Decorator
+
+e. Facade định nghĩa một giao diện mới, trong khi Adapter sử dụng lại giao diện cũ. Hãy nhớ rằng Adapter làm cho hai giao diện hiện tại hoạt động cùng nhau trái ngược với việc định nghĩa một giao diện hoàn toàn mới.
+
+8. Ví dụ của việc làm thế nào để thực hiện mô hình Adapter trong Java
+
+* Nguồn: https://sourcemaking.com/design_patterns/adapter
