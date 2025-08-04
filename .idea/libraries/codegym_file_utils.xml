@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="codegym-file-utils">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/week9/structural_design_pattern/practice/p3/file_worker/codegym-file-utils.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
