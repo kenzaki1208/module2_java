@@ -1,6 +1,5 @@
 package Dictionary_English_and_VN;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -157,7 +156,7 @@ public class Main {
                             String updateVietnameseWord = scanner.nextLine();
 
                             System.out.print("Enter synonyms (comma-separated), or leave blank if none: ");
-                            String synonymInput = scanner.nextLine();
+//                            String synonymInput = scanner.nextLine();
 //                            List<String> synonyms = new ArrayList<>();
 //
 //                            if (!synonymInput.trim().isEmpty()) {
@@ -188,7 +187,7 @@ public class Main {
                     }
                     break;
                 case 5:
-//                    for (Word w : dictionary.getAllWords()) {
+//                    for (Word w: dictionary.getAllWords()) {
 //                        System.out.println(w);
 //                    }
                     System.out.println();
