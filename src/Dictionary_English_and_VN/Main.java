@@ -31,6 +31,18 @@ public class Main {
             choice = scanner.nextInt();
             scanner.nextLine();
 
+            try {
+                choice = Integer.parseInt(scanner.nextLine());
+                if (choice < 0 || choice > 3) {
+                    System.out.println("Invalid choice! Please enter a number between 0-3");
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter a number.");
+                choice = -1;
+                continue;
+            }
+
             switch (choice) {
                 case 1:
                     EngToVnDictionary(scanner, dictionary);
@@ -69,7 +81,7 @@ public class Main {
             try {
                 choice = Integer.parseInt(scanner.nextLine());
                 if (choice < 0 || choice > 6) {
-                    System.out.println("Invalid choice! Please enter a number between 0-5");
+                    System.out.println("Invalid choice! Please enter a number between 0-6");
                     continue;
                 }
             } catch (NumberFormatException e) {
@@ -155,7 +167,7 @@ public class Main {
                             System.out.print("Enter vietnamese word need to update: ");
                             String updateVietnameseWord = scanner.nextLine();
 
-                            System.out.print("Enter synonyms (comma-separated), or leave blank if none: ");
+//                            System.out.print("Enter synonyms (comma-separated), or leave blank if none: ");
 //                            String synonymInput = scanner.nextLine();
 //                            List<String> synonyms = new ArrayList<>();
 //
@@ -226,7 +238,7 @@ public class Main {
             try {
                 choice = Integer.parseInt(scanner.nextLine());
                 if (choice < 0 || choice > 6) {
-                    System.out.println("Invalid choice! Please enter a number between 0-5");
+                    System.out.println("Invalid choice! Please enter a number between 0-6");
                     continue;
                 }
             } catch (NumberFormatException e) {
@@ -343,6 +355,9 @@ public class Main {
                     }
                     break;
                 case 5:
+//                    for (GermanWord w: dict.getAll()) {
+//                        System.out.println(w);
+//                    }
                     System.out.println();
                     dict.displayAll();
                     break;
@@ -379,7 +394,7 @@ public class Main {
             try {
                 choice = Integer.parseInt(scanner.nextLine());
                 if (choice < 0 || choice > 6) {
-                    System.out.println("Invalid choice! Please enter a number between 0-5");
+                    System.out.println("Invalid choice! Please enter a number between 0-6");
                     continue;
                 }
             } catch (NumberFormatException e) {
@@ -497,6 +512,9 @@ public class Main {
                     }
                     break;
                 case 5:
+//                    for (FranceWord w: dictFranceToVn.getAll()) {
+//                        System.out.println(w);
+//                    }
                     System.out.println();
                     dictFranceToVn.displayAll();
                     break;
