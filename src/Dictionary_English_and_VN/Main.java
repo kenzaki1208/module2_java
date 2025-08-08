@@ -466,24 +466,24 @@ public class Main {
                             System.out.print("Enter vietnamese word need to update: ");
                             String updateVietnameseWord = scanner.nextLine();
 
-                            System.out.print("Enter synonyms (comma-separated), or leave blank if none: ");
-                            String synonymInput = scanner.nextLine();
-                            List<String> franceSynonyms = new ArrayList<>();
-                            if (!synonymInput.trim().isEmpty()) {
-                                String[] parts = synonymInput.split(",");
-                                for (String part : parts) {
-                                    franceSynonyms.add(part.trim());
-                                }
-                            }
+//                            System.out.print("Enter synonyms (comma-separated), or leave blank if none: ");
+//                            String synonymInput = scanner.nextLine();
+//                            List<String> franceSynonyms = new ArrayList<>();
+//                            if (!synonymInput.trim().isEmpty()) {
+//                                String[] parts = synonymInput.split(",");
+//                                for (String part : parts) {
+//                                    franceSynonyms.add(part.trim());
+//                                }
+//                            }
 
                             if (dictFranceToVn.update(updateId, updateFranceWord, updateVietnameseWord)) {
-                                FranceWord franceWordToUpdate = dictFranceToVn.getAll().stream().
-                                        filter(franceWord -> franceWord.getId() == updateId).
-                                        findFirst().orElse(null);
-
-                                if (franceWordToUpdate != null) {
-                                    franceWordToUpdate.setFranceSynonyms(franceSynonyms);
-                                }
+//                                FranceWord franceWordToUpdate = dictFranceToVn.getAll().stream().
+//                                        filter(franceWord -> franceWord.getId() == updateId).
+//                                        findFirst().orElse(null);
+//
+//                                if (franceWordToUpdate != null) {
+//                                    franceWordToUpdate.setFranceSynonyms(franceSynonyms);
+//                                }
 
                                 dictFranceToVn.saveFile();
                                 System.out.println("Word updated successfully !");
