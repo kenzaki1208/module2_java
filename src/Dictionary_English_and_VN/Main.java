@@ -28,8 +28,8 @@ public class Main {
             System.out.println("3. Extract France to Vietnamese");
             System.out.println("0. Exit");
             System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine();
+//            choice = scanner.nextInt();
+//            scanner.nextLine();
 
             try {
                 choice = Integer.parseInt(scanner.nextLine());
@@ -141,7 +141,7 @@ public class Main {
                                     System.out.println(w.getEnglish() + " -> " + w.getVietnamese());
 
                                     if (w.getSynonyms() != null && !w.getSynonyms().isEmpty()) {
-                                        System.out.println("Synonyms: " + String.join(", ", w.getSynonyms()));
+                                        System.out.println("- Synonyms: " + String.join(", ", w.getSynonyms()));
                                     }
                                 }
                             } else {
@@ -298,7 +298,7 @@ public class Main {
                                     System.out.println(w.getGerman() + " -> " + w.getVietnamese());
 
                                     if (w.getSynonyms() != null && !w.getSynonyms().isEmpty()) {
-                                        System.out.println("Synonyms: " + String.join(", ", w.getSynonyms()));
+                                        System.out.println("- Synonyms: " + String.join(", ", w.getSynonyms()));
                                     }
                                 }
                             } else {
@@ -454,7 +454,7 @@ public class Main {
                                     System.out.println(w.getFrance() + " -> " + w.getVietnamese());
 
                                     if (w.getSynonyms() != null && !w.getSynonyms().isEmpty()) {
-                                        System.out.println("Synonyms: " + String.join(", ", w.getSynonyms()));
+                                        System.out.println("- Synonyms: " + String.join(", ", w.getSynonyms()));
                                     }
                                 }
                             } else {
