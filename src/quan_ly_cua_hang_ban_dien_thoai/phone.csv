@@ -1,6 +1,5 @@
 ID,Name,Price,Quantity,Manufacturer,WarrantyPeriod/WarrantyScope/PortableCountry/PortableStatus
-1,SamSung S9,1.0E7,10,Samsung,12,Toàn Quốc
 2,Iphone X,2.0E7,10,Apple,12,Toàn quốc
 3,Nokia N72,1.0E7,10,Nokia,China,Đã sửa chữa
 4,Iphone 11,6.0E7,10,Nokia,USA,Chưa sửa chữa
-1,xiaomi,1.0E7,10,Xiaomi,12,Toàn quốc
+5,Samsung S9,1.0E7,10,Samsung,12,Toàn quốc
