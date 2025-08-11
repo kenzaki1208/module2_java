@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
     private static final PhoneManagement management = new PhoneManagement();
     private static final Scanner scanner = new Scanner(System.in);
-    private static int currentId = 1;
+    private static int currentId = management.getMaxId() + 1;
 
     public static void main(String[] args) {
         int choice;

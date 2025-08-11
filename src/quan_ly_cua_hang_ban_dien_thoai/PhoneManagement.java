@@ -125,4 +125,15 @@ public class PhoneManagement {
             e.printStackTrace();
         }
     }
+
+    public int getMaxId() {
+        int max = 0;
+        for (Phone phone : phones) {
+            if (phone.getId() > max) {
+                max = phone.getId();
+            }
+        }
+        return max;
+    }
+
 }
