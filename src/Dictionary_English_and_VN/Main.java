@@ -199,9 +199,9 @@ public class Main {
                     }
                     break;
                 case 5:
-//                    for (Word w: dictionary.getAllWords()) {
-//                        System.out.println(w);
-//                    }
+                    for (Word w: dictionary.getAllWords()) {
+                        System.out.println(w);
+                    }
                     System.out.println();
                     dictionary.displayAllWords();
                     break;

@@ -1,0 +1,4 @@
+Phone { id: 2, name: Samsung S9, price: 1.0E7, quantity: 10, manufacturer: Samsung }
+Phone { id: 3, name: Iphone X, price: 2.0E7, quantity: 10, manufacturer: Apple }
+Phone { id: 4, name: Nokia N72, price: 1.0E7, quantity: 10, manufacturer: Nokia }
+Phone { id: 5, name: Iphone 11, price: 6.0E7, quantity: 10, manufacturer: Nokia }
